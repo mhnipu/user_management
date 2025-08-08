@@ -26,12 +26,9 @@
               "src/styles.css"
             ],
             "server": "src/main.server.ts",
-            "outputMode": "browser",
+            "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            },
-            "prerender": {
-              "routesFile": "src/app/app.routes.server.ts"
             }
           },
           "configurations": {
