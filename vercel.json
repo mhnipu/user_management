@@ -7,10 +7,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "dist/user-management-app/server/server.mjs": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
