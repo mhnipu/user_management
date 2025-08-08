@@ -3,22 +3,22 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 export const serverRoutes: ServerRoute[] = [
   {
     path: 'users/edit/:id',
-    renderMode: RenderMode.Dynamic
+    renderMode: RenderMode.Server
   },
   {
     path: 'users/create',
-    renderMode: RenderMode.Prerender
+    renderMode: RenderMode.Server
   },
   {
     path: 'users',
-    renderMode: RenderMode.Prerender
+    renderMode: RenderMode.Server
   },
   {
     path: '',
-    renderMode: RenderMode.Prerender
+    renderMode: RenderMode.Server
   },
   {
     path: '**',
-    renderMode: RenderMode.Prerender
+    renderMode: RenderMode.Server
   }
 ];
