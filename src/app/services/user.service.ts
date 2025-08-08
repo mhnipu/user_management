@@ -120,6 +120,14 @@ export class UserService {
       );
     }
 
+    // First sort by creation date (newest first) to show recently created users at top
+    filteredUsers.sort((a, b) => {
+      const aDate = new Date(a.dateCreated).getTime();
+      const bDate = new Date(b.dateCreated).getTime();
+      return bDate - aDate; // Descending order (newest first)
+    });
+
+    // Then apply the user's selected sort
     filteredUsers.sort((a, b) => {
       let aValue: any, bValue: any;
       
