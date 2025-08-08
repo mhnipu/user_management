@@ -1,0 +1,133 @@
+<div class="user-form-container">
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>{{ isEditMode ? 'Edit User' : 'Create New User' }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-card">
+      <div *ngIf="loading" class="loading-state">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading user data...</p>
+      </div>
+
+      <form *ngIf="!loading" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+        <div class="form-section-title">
+          <h3>Personal Information</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name *</label>
+            <input 
+              type="text" 
+              formControlName="firstName" 
+              placeholder="Enter first name"
+              maxlength="50">
+            <div *ngIf="isFieldInvalid('firstName')" class="error-message">
+              {{ getErrorMessage('firstName') }}
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Last Name *</label>
+            <input 
+              type="text" 
+              formControlName="lastName" 
+              placeholder="Enter last name"
+              maxlength="50">
+            <div *ngIf="isFieldInvalid('lastName')" class="error-message">
+              {{ getErrorMessage('lastName') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Gender *</label>
+            <select formControlName="gender">
+              <option value="">Select gender</option>
+              <option *ngFor="let option of genderOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            <div *ngIf="isFieldInvalid('gender')" class="error-message">
+              {{ getErrorMessage('gender') }}
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Date of Birth *</label>
+            <input 
+              type="date" 
+              formControlName="dateOfBirth"
+              [max]="maxDate.toISOString().split('T')[0]"
+              [min]="minDate.toISOString().split('T')[0]">
+            <div *ngIf="isFieldInvalid('dateOfBirth')" class="error-message">
+              {{ getErrorMessage('dateOfBirth') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section-title">
+          <h3>Contact Information</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>City</label>
+            <input 
+              type="text" 
+              formControlName="city" 
+              placeholder="Enter city">
+          </div>
+
+          <div class="form-field">
+            <label>Phone Number *</label>
+            <input 
+              type="tel" 
+              formControlName="phone" 
+              placeholder="Enter phone number">
+            <div *ngIf="isFieldInvalid('phone')" class="error-message">
+              {{ getErrorMessage('phone') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field full-width">
+            <label>Email Address *</label>
+            <input 
+              type="email" 
+              formControlName="email" 
+              placeholder="Enter email address">
+            <div *ngIf="isFieldInvalid('email')" class="error-message">
+              {{ getErrorMessage('email') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="action-buttons">
+            <button type="button" 
+                    class="cancel-btn"
+                    (click)="onCancel()"
+                    [disabled]="submitting">
+              Cancel
+            </button>
+            
+            <button type="submit" 
+                    class="submit-btn"
+                    [disabled]="userForm.invalid || submitting">
+              <mat-spinner *ngIf="submitting" diameter="16" class="button-spinner"></mat-spinner>
+              {{ submitting ? 'Saving...' : (isEditMode ? 'Update User' : 'Create User') }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

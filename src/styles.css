@@ -1,1 +1,153 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Custom Material Design Theme Overrides */
+.mat-mdc-raised-button.mat-primary {
+  background-color: #667eea;
+}
+
+.mat-mdc-raised-button.mat-primary:hover {
+  background-color: #5a6fd8;
+}
+
+.mat-mdc-raised-button.mat-warn {
+  background-color: #f44336;
+}
+
+.mat-mdc-raised-button.mat-warn:hover {
+  background-color: #d32f2f;
+}
+
+.mat-mdc-fab.mat-primary {
+  background-color: #667eea;
+}
+
+.mat-mdc-fab.mat-primary:hover {
+  background-color: #5a6fd8;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Loading spinner styles */
+.mat-mdc-progress-spinner circle {
+  stroke: #667eea;
+}
+
+/* Card elevation */
+.mat-mdc-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.mat-mdc-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Button transitions */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-stroked-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  transition: all 0.2s ease;
+}
+
+/* Form field focus */
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-flex {
+  background-color: rgba(102, 126, 234, 0.04);
+}
+
+/* Table row hover */
+.mat-mdc-table tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.04);
+}
+
+/* Dialog backdrop */
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Snackbar styles */
+.mat-mdc-snack-bar-container {
+  border-radius: 8px;
+}
+
+.mat-mdc-snack-bar-container.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.mat-mdc-snack-bar-container.error {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Responsive utilities */
+.hidden-mobile {
+  display: block;
+}
+
+.visible-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none;
+  }
+  
+  .visible-mobile {
+    display: block;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+}

@@ -1,0 +1,160 @@
+<div class="user-list-container">
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>Users</h1>
+      </div>
+      <div class="header-actions">
+        <div class="search-section">
+          <div class="search-input">
+            <mat-icon>search</mat-icon>
+            <input 
+              type="text" 
+              placeholder="Search by name, email, phone" 
+              [(ngModel)]="filters.searchTerm" 
+              (input)="onFilterChange()"
+            >
+            <button *ngIf="filters.searchTerm" mat-icon-button class="clear-search" (click)="filters.searchTerm=''; onFilterChange()" aria-label="Clear search">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <button mat-stroked-button class="filter-btn" (click)="toggleFilterPanel()" [class.active]="showFilterPanel">
+            <mat-icon>filter_list</mat-icon>
+            Filters
+          </button>
+          
+          <div class="filter-panel" *ngIf="showFilterPanel">
+            <div class="filter-header">
+              <h3>Filter Options</h3>
+              <button mat-icon-button class="close-filter" (click)="toggleFilterPanel()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+            
+            <div class="filter-content">
+              <div class="filter-group">
+                <label>Filter by Name:</label>
+                <input 
+                  type="text" 
+                  placeholder="Enter name to filter" 
+                  [(ngModel)]="filters.nameFilter" 
+                  (input)="onFilterChange()"
+                  class="filter-input"
+                >
+              </div>
+              <div class="filter-group">
+                <label>Filter by Email:</label>
+                <input 
+                  type="text" 
+                  placeholder="Enter email to filter" 
+                  [(ngModel)]="filters.emailFilter" 
+                  (input)="onFilterChange()"
+                  class="filter-input"
+                >
+              </div>
+              <div class="filter-actions">
+                <button mat-stroked-button class="clear-filters" (click)="clearAllFilters()">
+                  <mat-icon>clear_all</mat-icon>
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sort-controls">
+          <button mat-stroked-button class="direction-btn" (click)="toggleSortDirection()">
+            <mat-icon>{{ userSort.direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+            {{ userSort.direction === 'asc' ? 'Asc' : 'Desc' }}
+          </button>
+          <button mat-stroked-button class="sort-field-btn" (click)="toggleSortField()">
+            {{ userSort.field === 'firstName' ? 'Name' : 'Email' }}
+          </button>
+        </div>
+
+        <button mat-raised-button 
+                color="warn" 
+                (click)="onCreateUser()"
+                class="create-user-btn">
+          <mat-icon>add</mat-icon>
+          Create User
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div *ngIf="loading" class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading users...</p>
+    </div>
+
+    <div *ngIf="!loading && users.length === 0" class="no-data-state">
+      <mat-icon>people_outline</mat-icon>
+      <h3>No Users Found</h3>
+      <p>Start by adding your first user to the system.</p>
+      <button mat-raised-button 
+              color="warn" 
+              (click)="onCreateUser()">
+        <mat-icon>add</mat-icon>
+        Create First User
+      </button>
+    </div>
+
+    <div *ngIf="!loading && users.length > 0" class="table-wrapper">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th class="name-col"><div class="column-header"><span>Name</span></div></th>
+            <th class="email-col"><div class="column-header"><span>Email</span></div></th>
+            <th class="gender-col"><div class="column-header"><span>Gender</span></div></th>
+            <th class="phone-col"><div class="column-header"><span>Phone Number</span></div></th>
+            <th class="dob-col"><div class="column-header"><span>Date of Birth</span></div></th>
+            <th class="actions-col"><div class="column-header"><span>Actions</span></div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users" class="table-row">
+            <td class="name-cell">
+              <div class="user-info">
+                <div class="user-avatar"><mat-icon>account_circle</mat-icon></div>
+                <div class="user-details">
+                  <div class="user-name">{{ getFullName(user) }}</div>
+                  <div class="user-city" *ngIf="user.city">{{ user.city }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="email-cell"><div class="email-info"><span>{{ user.email }}</span></div></td>
+            <td class="gender-cell"><div class="gender-badge" [class]="user.gender.toLowerCase()"><span>{{ user.gender }}</span></div></td>
+            <td class="phone-cell"><div class="phone-info"><span>{{ user.phone }}</span></div></td>
+            <td class="dob-cell"><div class="date-info"><span>{{ formatDate(user.dateOfBirth) }}</span></div></td>
+            <td class="actions-cell">
+              <div class="action-buttons">
+                <button mat-icon-button (click)="onEditUser(user)" matTooltip="Edit User" class="edit-btn">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="onDeleteUser(user)" matTooltip="Delete User" class="delete-btn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!loading && totalUsers > 0" class="pagination-section">
+      <div class="pagination-info"><span>{{ totalUsers }} total</span></div>
+      <mat-paginator 
+        [length]="totalUsers"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div> 
